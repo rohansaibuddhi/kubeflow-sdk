@@ -12,6 +12,6 @@ __pycache__/
 
 .coverage
 bin
-
+.env
 coverage.xml
 htmlcov/

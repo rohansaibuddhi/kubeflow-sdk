@@ -71,7 +71,15 @@ release: install-dev
 	@V_NO_V=$(VERSION); \
 	sed -i.bak "s/^__version__ = \".*\"/__version__ = \"$$V_NO_V\"/" kubeflow/__init__.py && \
 	rm -f kubeflow/__init__.py.bak
-	@uv run python scripts/gen-changelog.py --token=$${GITHUB_TOKEN} --version=$(VERSION)
+	@PREV_TAG=$$(git tag -l --sort=-creatordate | head -1); \
+	CHANGELOG_FILE=CHANGELOG/CHANGELOG-$$(echo $(VERSION) | cut -d. -f1-2).md; \
+	if [ -z "$$PREV_TAG" ]; then \
+	  GITHUB_TOKEN=$${GITHUB_TOKEN} git-cliff --tag $(VERSION) -o $$CHANGELOG_FILE; \
+	elif [ -f "$$CHANGELOG_FILE" ]; then \
+	  GITHUB_TOKEN=$${GITHUB_TOKEN} git-cliff $$PREV_TAG..HEAD --tag $(VERSION) --prepend $$CHANGELOG_FILE; \
+	else \
+	  GITHUB_TOKEN=$${GITHUB_TOKEN} git-cliff $$PREV_TAG..HEAD --tag $(VERSION) -o $$CHANGELOG_FILE; \
+	fi
 
  # make test-python will produce html coverage by default. Run with `make test-python report=xml` to produce xml report.
 .PHONY: test-python
