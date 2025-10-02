@@ -464,6 +464,7 @@ podman = [
 [package.dev-dependencies]
 dev = [
     { name = "coverage" },
+    { name = "git-cliff" },
     { name = "kubeflow-katib-api" },
     { name = "git-cliff" },
     { name = "kubeflow-trainer-api" },
@@ -488,6 +489,7 @@ provides-extras = ["docker", "podman"]
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage", specifier = ">=7.0" },
+    { name = "git-cliff", specifier = ">=2.0.0" },
     { name = "kubeflow-katib-api", git = "https://github.com/kubeflow/katib.git?subdirectory=api%2Fpython_api&rev=master" },
     { name = "git-cliff", specifier = ">=2.0.0" },
     { name = "kubeflow-trainer-api", git = "https://github.com/kubeflow/trainer.git?subdirectory=api%2Fpython_api&rev=master" },
