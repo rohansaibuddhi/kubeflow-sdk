@@ -71,7 +71,12 @@ release: install-dev
 	@V_NO_V=$(VERSION); \
 	sed -i.bak "s/^__version__ = \".*\"/__version__ = \"$$V_NO_V\"/" kubeflow/__init__.py && \
 	rm -f kubeflow/__init__.py.bak
-	@PREV_TAG=$$(git tag -l --sort=-creatordate | head -1); \
+
+	@# Determine previous tag based on release type.
+	@# RC release: use most recent tag (any type)
+	@# Stable release: use most recent stable tag (excluding RCs)
+	@PREV_TAG=$$(echo $(VERSION) | grep -qE 'rc[0-9]+$$' && git tag -l --sort=-creatordate | head -1 || \
+	  git tag -l --sort=-creatordate | grep -vE 'rc[0-9]+$$' | head -1); \
 	CHANGELOG_FILE=CHANGELOG/CHANGELOG-$$(echo $(VERSION) | cut -d. -f1-2).md; \
 	if [ -z "$$PREV_TAG" ]; then \
 	  GITHUB_TOKEN=$${GITHUB_TOKEN} git-cliff --tag $(VERSION) -o $$CHANGELOG_FILE; \

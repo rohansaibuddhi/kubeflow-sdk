@@ -57,7 +57,22 @@ The Kubeflow SDK uses an automated release process with GitHub Actions:
 
 #### 1. Update Version and Changelog
 
-1. Generate version and changelog locally (this will sync dependencies automatically):
+1. Ensure prerequisites:
+
+   - Install `git-cliff`.
+
+   ```sh
+   pip install git-cliff
+   ```
+
+   - Export a `GITHUB_TOKEN` with repo read access (used for PR links/contributors).
+
+2. Make sure you’re on the correct base branch and up to date:
+
+   - If working against upstream: `git fetch upstream main --tags`.
+   - Avoid running from a feature branch to prevent including unmerged commits.
+
+3. Generate version and changelog locally (this will sync dependencies automatically):
 
    ```sh
    export GITHUB_TOKEN=<your_github_token>
@@ -65,6 +80,7 @@ The Kubeflow SDK uses an automated release process with GitHub Actions:
    ```
 
 This updates:
+
 - `kubeflow/__init__.py` with `__version__ = "X.Y.Z"`
 - `CHANGELOG/CHANGELOG-X.Y.md` with a new top entry `# [X.Y.Z] (YYYY-MM-DD)`
 
@@ -97,9 +113,9 @@ The `Release` GitHub Action automatically:
 2. Verify the release on [GitHub Releases](https://github.com/kubeflow/sdk/releases)
 3. Test installation: `pip install kubeflow==X.Y.Z`
 
-
 ## Announcement
 
 **Announce**: Post the announcement for the new Kubeflow SDK release in:
+
 - [#kubeflow-ml-experience](https://www.kubeflow.org/docs/about/community/#slack-channels) Slack channel
 - [kubeflow-discuss](https://www.kubeflow.org/docs/about/community/#kubeflow-mailing-list) mailing list
