@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.9"
 
 [[package]]
@@ -433,6 +433,7 @@ wheels = [
 name = "kubeflow"
 source = { editable = "." }
 dependencies = [
+    { name = "kubeflow-katib-api" },
     { name = "kubeflow-trainer-api" },
     { name = "kubernetes" },
     { name = "pydantic" },
@@ -441,6 +442,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "coverage" },
+    { name = "kubeflow-katib-api" },
     { name = "git-cliff" },
     { name = "kubeflow-trainer-api" },
     { name = "pre-commit" },
@@ -452,6 +454,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "kubeflow-katib-api", specifier = ">=0.19.0" },
     { name = "kubeflow-trainer-api", specifier = ">=2.0.0" },
     { name = "kubernetes", specifier = ">=27.2.0" },
     { name = "pydantic", specifier = ">=2.10.0" },
@@ -460,6 +463,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage", specifier = ">=7.0" },
+    { name = "kubeflow-katib-api", git = "https://github.com/kubeflow/katib.git?subdirectory=api%2Fpython_api&rev=master" },
     { name = "git-cliff", specifier = ">=2.0.0" },
     { name = "kubeflow-trainer-api", git = "https://github.com/kubeflow/trainer.git?subdirectory=api%2Fpython_api&rev=master" },
     { name = "pre-commit", specifier = ">=4.2.0" },
@@ -467,6 +471,14 @@ dev = [
     { name = "pytest", specifier = ">=7.0" },
     { name = "pytest-mock", specifier = ">=3.10" },
     { name = "ruff", specifier = ">=0.12.2" },
+]
+
+[[package]]
+name = "kubeflow-katib-api"
+version = "0.19.0"
+source = { git = "https://github.com/kubeflow/katib.git?subdirectory=api%2Fpython_api&rev=master#38982e298d9c8d003d8964eaa067b71cb432fb7e" }
+dependencies = [
+    { name = "pydantic" },
 ]
 
 [[package]]
